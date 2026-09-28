@@ -50,9 +50,9 @@ function MiniPortrait() {
 }
 
 const primaryBtn =
-  "rounded-full bg-yellow px-[6cqw] py-[2.6cqw] font-friends text-[4.6cqw] font-semibold text-purple-deep shadow-[0_1cqw_0_#c98f12] transition active:translate-y-[0.6cqw] active:shadow-none disabled:opacity-60";
+  "rounded-full bg-yellow px-[6cqw] py-[2.6cqw] font-rounded text-[4.6cqw] font-semibold text-purple-deep shadow-[0_1cqw_0_#c98f12] transition active:translate-y-[0.6cqw] active:shadow-none disabled:opacity-60";
 const ghostBtn =
-  "rounded-full border-2 border-white/80 px-[6cqw] py-[2.3cqw] font-friends text-[4.6cqw] font-medium transition hover:bg-white/10 active:scale-95";
+  "rounded-full border-2 border-white/80 px-[6cqw] py-[2.3cqw] font-rounded text-[4.6cqw] font-medium transition hover:bg-white/10 active:scale-95";
 const inputClass =
   "w-full rounded-[3cqw] border-2 border-transparent bg-white px-[4cqw] py-[2.8cqw] font-sans text-[4.2cqw] text-purple-deep outline-none placeholder:text-purple-deep/40 focus:border-yellow";
 

@@ -6,7 +6,7 @@ export default function NameTitle({ nome, start = 0 }: { nome: string; start?: n
 
   return (
     <h1
-      className="flex items-center justify-center font-friends font-medium text-[6.5cqw] leading-none"
+      className="flex items-center justify-center font-friends text-[10.4cqw] leading-none"
       aria-label={nome}
     >
       {letters.map((letter, i) => (
@@ -16,7 +16,7 @@ export default function NameTitle({ nome, start = 0 }: { nome: string; start?: n
           </span>
           {i < letters.length - 1 && (
             <span
-              className="anim-pop mx-[1.7cqw] size-[1.5cqw] rounded-full"
+              className="anim-pop mx-[1.2cqw] h-[1.9cqw] w-[2.3cqw] rounded-[50%]"
               style={{
                 background: DOT_COLORS[i % DOT_COLORS.length],
                 animationDelay: `${start + i * 0.12 + 0.06}s`,

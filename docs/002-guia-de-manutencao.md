@@ -8,7 +8,7 @@ Histórico de mudanças: `docs/001-...`, `docs/004-...` etc.
 - **Next.js 16** (App Router) + **TypeScript**
 - **Tailwind CSS v4** (configurado direto no CSS, sem `tailwind.config.js`)
 - **Firebase Firestore** (lista de confirmados)
-- Fontes do Google via `next/font`: **Satisfy** (script), **Fredoka** (nome),
+- Fontes do Google via `next/font`: **Satisfy** (script), **Gochi Hand** (nome), **Fredoka** (botões do RSVP),
   **Montserrat** (textos pequenos)
 
 ## Estrutura de pastas
@@ -36,7 +36,7 @@ Yasmin-20y/
     │   ├── CornerRibbon.tsx      # Fita dourada com laço de cada canto
     │   ├── FriendsFrame.tsx      # Desenho SVG da moldura do Friends
     │   ├── FrameCarousel.tsx     # Carrossel: fila de molduras + rosto + chapéu + estrelinhas
-    │   ├── NameTitle.tsx         # Y·A·S·M·I·N (letras brancas, pontos coloridos)
+    │   ├── NameTitle.tsx         # Y·A·S·M·I·N (Gochi Hand, letras brancas, bolinhas ovais coloridas)
     │   ├── TypeReveal.tsx        # Efeito de texto sendo digitado
     │   ├── Sparkle.tsx           # Estrelinha branca de 4 pontas
     │   ├── ActionButtons.tsx     # "Como chegar" e "Confirme sua presença!" (ícones)

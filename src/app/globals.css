@@ -19,7 +19,8 @@
   --color-dot-yellow: var(--dot-yellow);
   --color-dot-blue: var(--dot-blue);
   --font-script: var(--font-satisfy);
-  --font-friends: var(--font-fredoka);
+  --font-friends: var(--font-gochi);
+  --font-rounded: var(--font-fredoka);
   --font-sans: var(--font-montserrat);
 }
 

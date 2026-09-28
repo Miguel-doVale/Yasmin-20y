@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Satisfy, Fredoka, Montserrat } from "next/font/google";
+import { Satisfy, Fredoka, Gochi_Hand, Montserrat } from "next/font/google";
 import "./globals.css";
 
 const satisfy = Satisfy({
@@ -12,6 +12,12 @@ const fredoka = Fredoka({
   variable: "--font-fredoka",
   subsets: ["latin"],
   weight: ["500", "600"],
+});
+
+const gochi = Gochi_Hand({
+  variable: "--font-gochi",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const montserrat = Montserrat({
@@ -42,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${satisfy.variable} ${fredoka.variable} ${montserrat.variable} antialiased`}
+        className={`${satisfy.variable} ${fredoka.variable} ${gochi.variable} ${montserrat.variable} antialiased`}
       >
         {children}
       </body>

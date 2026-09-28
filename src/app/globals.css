@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+:root {
+  /* Paleta extraída do convite (tema "Friends" - moldura do porteiro) */
+  --color-purple: #7c68b0;
+  --color-purple-dark: #6b579d;
+  --color-yellow: #f3c53d;
+  --color-yellow-dark: #dba918;
+  --color-pink: #ff8fc0;
+  --color-pink-dark: #e85fa0;
+  --background: var(--color-purple);
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-purple: var(--color-purple);
+  --color-brand-purple-dark: var(--color-purple-dark);
+  --color-brand-yellow: var(--color-yellow);
+  --color-brand-yellow-dark: var(--color-yellow-dark);
+  --color-brand-pink: var(--color-pink);
+  --color-brand-pink-dark: var(--color-pink-dark);
+  --font-script: var(--font-script);
+  --font-title: var(--font-title);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

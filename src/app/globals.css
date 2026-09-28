@@ -56,7 +56,7 @@ body {
     opacity: 0;
   }
   to {
-    opacity: 1;
+    opacity: var(--fade-to, 1);
   }
 }
 
@@ -186,7 +186,7 @@ body {
   .anim-fade,
   .anim-pop {
     animation: none;
-    opacity: 1;
+    opacity: var(--fade-to, 1);
   }
   .anim-draw path {
     animation: none;

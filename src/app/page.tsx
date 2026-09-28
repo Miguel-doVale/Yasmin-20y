@@ -3,6 +3,8 @@ import NameTitle from "@/components/NameTitle";
 import FrameCarousel from "@/components/FrameCarousel";
 import ActionButtons from "@/components/ActionButtons";
 import TypeReveal from "@/components/TypeReveal";
+import SecretTap from "@/components/SecretTap";
+import Link from "next/link";
 import { eventConfig } from "@/lib/eventConfig";
 
 const DOTS = ["var(--dot-red)", "var(--dot-yellow)", "var(--dot-blue)"];
@@ -18,7 +20,10 @@ export default function Home() {
           <TypeReveal text={eventConfig.chamada} start={0.9} />
         </p>
         <div className="mt-[1.4cqw]">
-          <NameTitle nome={eventConfig.nome} start={1.4} />
+          {/* Atalho escondido: 5 toques seguidos no nome abrem a lista de confirmados */}
+          <SecretTap href="/lista">
+            <NameTitle nome={eventConfig.nome} start={1.4} />
+          </SecretTap>
         </div>
         <p className="mt-[2.2cqw] font-script text-[6cqw] leading-tight">
           <TypeReveal text={eventConfig.subtitulo} start={2.2} />
@@ -53,6 +58,21 @@ export default function Home() {
         <div className="mt-[5.5cqw]">
           <ActionButtons start={4.8} />
         </div>
+
+        {/* Botão discreto para a lista. Liga/desliga em eventConfig.mostrarBotaoLista */}
+        {eventConfig.mostrarBotaoLista && (
+          <Link
+            href="/lista"
+            className="anim-fade mt-[4cqw] flex items-center gap-[1cqw] rounded-full px-[3cqw] py-[1cqw] font-sans text-[2.6cqw] transition hover:bg-white/10"
+            style={{ animationDelay: "5.4s", ["--fade-to" as string]: 0.55 }}
+          >
+            <svg viewBox="0 0 24 24" className="size-[3cqw]" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <rect x="5" y="11" width="14" height="10" rx="2" />
+              <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+            </svg>
+            Organizadores
+          </Link>
+        )}
       </div>
     </InviteCard>
   );

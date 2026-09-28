@@ -38,6 +38,7 @@ Yasmin-20y/
     │   ├── FriendsFrame.tsx      # Desenho SVG da moldura do Friends
     │   ├── FrameCarousel.tsx     # Carrossel: fila de molduras + rosto + chapéu + estrelinhas
     │   ├── NameTitle.tsx         # Y·A·S·M·I·N (Gochi Hand, letras brancas, bolinhas ovais coloridas)
+    │   ├── SecretTap.tsx         # Atalho escondido (5 toques no nome → /lista)
     │   ├── TypeReveal.tsx        # Efeito de texto sendo digitado
     │   ├── Sparkle.tsx           # Estrelinha branca de 4 pontas
     │   ├── ActionButtons.tsx     # "Como chegar" e "Confirme sua presença!" (ícones)
@@ -68,6 +69,8 @@ Yasmin-20y/
 | Ordem e tempo das animações de entrada | `src/app/page.tsx` → props `start` (segundos) |
 | Textos da página de confirmação | `src/components/RsvpFlow.tsx` |
 | Campos salvos no banco | `src/lib/firebase.ts` → `saveRsvp` **e** `firestore.rules` (os dois precisam bater!) |
+| **Remover o botão "Organizadores"** do rodapé | `eventConfig.ts` → `mostrarBotaoLista: false` (detalhes no doc 007) |
+| Atalho de 5 toques no nome | `src/app/page.tsx` → `<SecretTap>` (doc 007) |
 | Título da aba / preview no WhatsApp | `src/app/layout.tsx` → `metadata` |
 
 ## Tamanhos em `cqw`

@@ -29,6 +29,10 @@ export const eventConfig = {
   fotosCarrossel: ["/images/yasmin-face.png"],
   // Chapéu de festa por cima da foto. Alternativa: "/images/party-hat-confetti.png"
   chapeu: "/images/party-hat-top.png",
+  // Botão discreto "Organizadores" no rodapé do convite, que leva à /lista.
+  // Para remover o botão, troque para false. O atalho de tocar 5x no nome continua funcionando.
+  mostrarBotaoLista: true,
+
   // Tempo que cada foto fica parada na moldura central antes de passar para a próxima
   carrosselIntervaloMs: 4000,
 } as const;

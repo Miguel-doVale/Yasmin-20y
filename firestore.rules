@@ -1,10 +1,21 @@
 rules_version = '2';
 
 // Coleção "confirmacoes": só quem confirmou presença (nome + telefone).
-// Qualquer visitante pode CRIAR uma confirmação válida; ninguém lê,
-// edita ou apaga pelo site. A lista é vista só no Console do Firebase.
+// - Qualquer visitante pode CRIAR uma confirmação válida.
+// - Só os e-mails de organizadores abaixo podem LER (página /lista).
+// - Ninguém edita ou apaga pelo site (só pelo Console do Firebase).
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // >>> Coloque aqui os e-mails Google que podem ver a lista <<<
+    function isOrganizer() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in [
+          'SEU_EMAIL@gmail.com'
+        ];
+    }
+
     match /confirmacoes/{docId} {
       allow create: if request.resource.data.keys().hasOnly(['nome', 'telefone', 'criadoEm'])
                     && request.resource.data.nome is string
@@ -13,7 +24,8 @@ service cloud.firestore {
                     && request.resource.data.telefone is string
                     && request.resource.data.telefone.matches('^[0-9]{10,11}$')
                     && request.resource.data.criadoEm == request.time;
-      allow read, update, delete: if false;
+      allow read: if isOrganizer();
+      allow update, delete: if false;
     }
   }
 }

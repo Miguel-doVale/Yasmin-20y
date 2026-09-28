@@ -1,5 +1,22 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  orderBy,
+  query,
+  type Timestamp,
+} from "firebase/firestore";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  type User,
+} from "firebase/auth";
 
 /**
  * Credenciais públicas do app Web do Firebase, lidas do .env.local.
@@ -18,9 +35,8 @@ export const isFirebaseConfigured = Boolean(config.apiKey && config.projectId &&
 
 export const RSVP_COLLECTION = "confirmacoes";
 
-function db() {
-  const app = getApps().length ? getApp() : initializeApp(config);
-  return getFirestore(app);
+function app() {
+  return getApps().length ? getApp() : initializeApp(config);
 }
 
 /** Salva uma confirmação de presença. Telefone só com dígitos (DDD + número). */
@@ -28,7 +44,7 @@ export async function saveRsvp(nome: string, telefone: string) {
   if (!isFirebaseConfigured) {
     throw new Error("firebase-not-configured");
   }
-  const write = addDoc(collection(db(), RSVP_COLLECTION), {
+  const write = addDoc(collection(getFirestore(app()), RSVP_COLLECTION), {
     nome,
     telefone,
     criadoEm: serverTimestamp(),
@@ -38,4 +54,44 @@ export async function saveRsvp(nome: string, telefone: string) {
     setTimeout(() => reject(new Error("timeout")), 15000),
   );
   await Promise.race([write, timeout]);
+}
+
+/* ---------- Área dos organizadores (/lista) ---------- */
+
+export type Rsvp = { id: string; nome: string; telefone: string; criadoEm: Date | null };
+
+export function watchUser(cb: (user: User | null) => void) {
+  return onAuthStateChanged(getAuth(app()), cb);
+}
+
+export function signInWithGoogle() {
+  return signInWithPopup(getAuth(app()), new GoogleAuthProvider());
+}
+
+export function signOutAdmin() {
+  return signOut(getAuth(app()));
+}
+
+/**
+ * Escuta a lista de confirmados em tempo real. Só funciona para e-mails
+ * autorizados em firestore.rules; os outros recebem "permission-denied".
+ */
+export function watchRsvps(onData: (rows: Rsvp[]) => void, onError: (code: string) => void) {
+  const q = query(collection(getFirestore(app()), RSVP_COLLECTION), orderBy("criadoEm", "desc"));
+  return onSnapshot(
+    q,
+    (snap) =>
+      onData(
+        snap.docs.map((d) => {
+          const data = d.data();
+          return {
+            id: d.id,
+            nome: String(data.nome ?? ""),
+            telefone: String(data.telefone ?? ""),
+            criadoEm: (data.criadoEm as Timestamp | null)?.toDate() ?? null,
+          };
+        }),
+      ),
+    (err) => onError((err as { code?: string }).code ?? "unknown"),
+  );
 }

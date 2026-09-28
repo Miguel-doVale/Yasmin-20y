@@ -30,7 +30,8 @@ Yasmin-20y/
     │   ├── layout.tsx            # Fontes, título da aba, cor da barra do navegador
     │   ├── globals.css           # PALETA DE CORES + todas as animações
     │   ├── page.tsx              # PÁGINA DO CONVITE (ordem e tempo das animações)
-    │   └── confirmar/page.tsx    # Página de RSVP (só monta o cartão + RsvpFlow)
+    │   ├── confirmar/page.tsx    # Página de RSVP (só monta o cartão + RsvpFlow)
+    │   └── lista/page.tsx        # Lista de confirmados (só organizadores, login Google)
     ├── components/
     │   ├── InviteCard.tsx        # O "cartão" roxo com as 4 fitas (usado nas 2 páginas)
     │   ├── CornerRibbon.tsx      # Fita dourada com laço de cada canto
@@ -40,7 +41,8 @@ Yasmin-20y/
     │   ├── TypeReveal.tsx        # Efeito de texto sendo digitado
     │   ├── Sparkle.tsx           # Estrelinha branca de 4 pontas
     │   ├── ActionButtons.tsx     # "Como chegar" e "Confirme sua presença!" (ícones)
-    │   └── RsvpFlow.tsx          # Fluxo: vai? → nome + telefone → salva
+    │   ├── RsvpFlow.tsx          # Fluxo: vai? → nome + telefone → salva
+    │   └── GuestList.tsx         # Página /lista: contador, busca, tabela, planilha
     └── lib/
         ├── eventConfig.ts        # TEXTOS E DADOS DO EVENTO (comece por aqui!)
         └── firebase.ts           # Conexão com o Firebase + função saveRsvp()
@@ -82,7 +84,10 @@ Canva em qualquer tela. Para aumentar ou diminuir algo, mude o número.
 
 ## Ver a lista de confirmados
 
-Console do Firebase → Firestore Database → aba **Dados** → coleção
+No próprio site: **`/lista`** (login com Google; ativação em `docs/006-pagina-lista-de-confirmados.md`).
+Quem pode ver é definido em `firestore.rules`, na função `isOrganizer()`.
+
+Ou no Console do Firebase → Firestore Database → aba **Dados** → coleção
 **`confirmacoes`**. Cada documento tem `nome`, `telefone` (só dígitos, com
 DDD) e `criadoEm`. Se alguém confirmar duas vezes, aparecem dois
 documentos com o mesmo telefone.

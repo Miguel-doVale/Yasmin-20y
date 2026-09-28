@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Aquele em que a Yasmin faz 20 anos",
     description: "Confirme sua presença!",
-    images: ["/images/yasmin-face.png"],
+    images: ["/images/yasmin-chapeu.png"],
   },
 };
 

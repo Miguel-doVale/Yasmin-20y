@@ -71,6 +71,7 @@ Yasmin-20y/
 | Campos salvos no banco | `src/lib/firebase.ts` → `saveRsvp` **e** `firestore.rules` (os dois precisam bater!) |
 | **Remover o botão "Organizadores"** do rodapé | `eventConfig.ts` → `mostrarBotaoLista: false` (detalhes no doc 007) |
 | Atalho de 5 toques no nome | `src/app/page.tsx` → `<SecretTap>` (doc 007) |
+| Ícone da aba (favicon) | `src/app/favicon.ico`, `icon.png`, `apple-icon.png` (doc 008) |
 | Título da aba / preview no WhatsApp | `src/app/layout.tsx` → `metadata` |
 
 ## Tamanhos em `cqw`

@@ -31,7 +31,7 @@ export const eventConfig = {
   chapeu: "/images/party-hat-top.png",
   // Botão discreto "Organizadores" no rodapé do convite, que leva à /lista.
   // Para remover o botão, troque para false. O atalho de tocar 5x no nome continua funcionando.
-  mostrarBotaoLista: true,
+  mostrarBotaoLista: false,
 
   // Tempo que cada foto fica parada na moldura central antes de passar para a próxima
   carrosselIntervaloMs: 4000,

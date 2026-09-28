@@ -1,31 +1,201 @@
 @import "tailwindcss";
 
+/* Paleta amostrada direto do vídeo do Canva */
 :root {
-  /* Paleta extraída do convite (tema "Friends" - moldura do porteiro) */
-  --color-purple: #7c68b0;
-  --color-purple-dark: #6b579d;
-  --color-yellow: #f3c53d;
-  --color-yellow-dark: #dba918;
-  --color-pink: #ff8fc0;
-  --color-pink-dark: #e85fa0;
-  --background: var(--color-purple);
-  --foreground: #ffffff;
+  --purple: #8c64a8;
+  --purple-deep: #5b3f73;
+  --yellow: #f7c514;
+  --yellow-groove: #c98f12;
+  --dot-red: #d3222a;
+  --dot-yellow: #f2b705;
+  --dot-blue: #2f6fd6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-brand-purple: var(--color-purple);
-  --color-brand-purple-dark: var(--color-purple-dark);
-  --color-brand-yellow: var(--color-yellow);
-  --color-brand-yellow-dark: var(--color-yellow-dark);
-  --color-brand-pink: var(--color-pink);
-  --color-brand-pink-dark: var(--color-pink-dark);
-  --font-script: var(--font-script);
-  --font-title: var(--font-title);
+  --color-purple: var(--purple);
+  --color-purple-deep: var(--purple-deep);
+  --color-yellow: var(--yellow);
+  --color-dot-red: var(--dot-red);
+  --color-dot-yellow: var(--dot-yellow);
+  --color-dot-blue: var(--dot-blue);
+  --font-script: var(--font-satisfy);
+  --font-friends: var(--font-fredoka);
+  --font-sans: var(--font-montserrat);
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--purple-deep);
+  color: #fff;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+}
+
+/* O cartão do convite: tudo dentro dele escala pela largura (cqw),
+   igual a um design do Canva, em qualquer tela. */
+.invite {
+  container-type: inline-size;
+  background: var(--purple);
+}
+
+/* ---------- Animações de entrada (sequência do vídeo) ---------- */
+
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.75) rotate(12deg);
+  }
+}
+
+@keyframes hat-wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+/* A fila de molduras entra deslizando da direita, como no vídeo */
+@keyframes track-in {
+  0% {
+    transform: translateX(126cqw);
+    filter: blur(3px);
+  }
+  75% {
+    filter: blur(1.5px);
+  }
+  100% {
+    transform: none;
+    filter: none;
+  }
+}
+
+@keyframes motion-blur {
+  0%,
+  100% {
+    filter: none;
+  }
+  50% {
+    filter: blur(2.5px);
+  }
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8%);
+  }
+}
+
+.anim-track-in {
+  animation: track-in 1.5s cubic-bezier(0.22, 0.8, 0.3, 1) 0.2s both;
+}
+
+.anim-motion-blur {
+  animation: motion-blur 0.9s ease-in-out;
+}
+
+.anim-nudge {
+  animation: nudge 2.4s ease-in-out infinite;
+}
+
+.anim-char {
+  display: inline-block;
+  opacity: 0;
+  animation: char-in 0.35s ease-out forwards;
+}
+
+.anim-fade {
+  opacity: 0;
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.anim-pop {
+  opacity: 0;
+  animation: pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.anim-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s ease-in-out forwards;
+}
+
+.anim-twinkle {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.anim-hat {
+  animation: hat-wiggle 3s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-char,
+  .anim-fade,
+  .anim-pop {
+    animation: none;
+    opacity: 1;
+  }
+  .anim-draw path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .anim-twinkle,
+  .anim-hat,
+  .anim-track-in,
+  .anim-motion-blur,
+  .anim-nudge {
+    animation: none;
+  }
 }

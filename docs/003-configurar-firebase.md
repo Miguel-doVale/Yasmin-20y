@@ -84,9 +84,12 @@ const firebaseConfig = {
 npm run dev
 ```
 
-Acesse `http://localhost:3000/confirmar`, preencha o formulário e envie.
-Depois vá no Console do Firebase → Firestore Database → aba **"Dados"** →
-coleção **`confirmacoes`** e veja o registro aparecer.
+Acesse `http://localhost:3000/confirmar`, clique em **"Vou sim!"**,
+preencha nome e telefone e envie. Depois vá no Console do Firebase →
+Firestore Database → aba **"Dados"** → coleção **`confirmacoes`** e veja o
+registro aparecer, com os campos `nome`, `telefone` (só dígitos) e `criadoEm`.
+
+Quem clica em "Não vou conseguir" **não** é salvo no banco.
 
 ## 7. Se for fazer deploy (ex: Vercel)
 
@@ -96,8 +99,12 @@ mesmos valores do seu `.env.local`.
 
 ---
 
-Qualquer erro nessa etapa (ex: "permission-denied" ao enviar o
-formulário), o mais provável é:
-- As regras do passo 3 não foram publicadas, ou
-- Algum campo do `.env.local` está errado/faltando (confira se salvou e
-  reiniciou o `npm run dev`).
+## Mensagens de erro no formulário
+
+- **"O banco de dados ainda não foi configurado"** → o `.env.local` (ou as
+  variáveis na Vercel) está vazio ou incompleto. Preencha e reinicie o
+  `npm run dev` (na Vercel, faça um novo deploy).
+- **"Não deu para enviar agora"** → sem internet, **ou** as regras do passo 3
+  não foram publicadas, **ou** a versão das regras no Console está diferente
+  do `firestore.rules` do projeto. Abra o console do navegador (F12) para
+  ver o erro exato (ex.: `permission-denied`).

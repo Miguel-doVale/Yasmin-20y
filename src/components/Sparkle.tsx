@@ -1,13 +1,19 @@
-export default function Sparkle({ className = "" }: { className?: string }) {
+/** Estrelinha de 4 pontas em contorno branco, como no convite. */
+export default function Sparkle({
+  className = "",
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
-    <svg viewBox="0 0 40 40" fill="none" className={className}>
+    <svg viewBox="0 0 24 24" className={className} style={style} aria-hidden>
       <path
-        d="M20 2 L23 15 L36 18 L23 21 L20 34 L17 21 L4 18 L17 15 Z"
-        fill="var(--color-brand-yellow)"
-      />
-      <path
-        d="M32 2 L33.2 6.2 L37 7.5 L33.2 8.8 L32 13 L30.8 8.8 L27 7.5 L30.8 6.2 Z"
-        fill="var(--color-brand-yellow)"
+        d="M12 1 C12.6 8, 16 11.4, 23 12 C16 12.6, 12.6 16, 12 23 C11.4 16, 8 12.6, 1 12 C8 11.4, 11.4 8, 12 1 Z"
+        fill="none"
+        stroke="#fff"
+        strokeWidth="2"
+        strokeLinejoin="round"
       />
     </svg>
   );

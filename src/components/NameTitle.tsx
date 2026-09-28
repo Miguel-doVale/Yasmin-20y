@@ -1,36 +1,30 @@
-const letterColors = [
-  "text-brand-yellow",
-  "text-pink-300",
-  "text-sky-300",
-  "text-lime-300",
-  "text-orange-300",
-  "text-fuchsia-300",
-  "text-red-300",
-  "text-teal-300",
-];
+const DOT_COLORS = ["var(--dot-red)", "var(--dot-yellow)", "var(--dot-blue)"];
 
-export default function NameTitle({ nome }: { nome: string }) {
-  const letters = nome.split("");
+/** Nome no estilo do logo de Friends: letras brancas separadas por pontos coloridos. */
+export default function NameTitle({ nome, start = 0 }: { nome: string; start?: number }) {
+  const letters = [...nome.toUpperCase()];
 
   return (
-    <div className="flex items-center justify-center flex-wrap gap-x-1">
+    <h1
+      className="flex items-center justify-center font-friends font-medium text-[6.5cqw] leading-none"
+      aria-label={nome}
+    >
       {letters.map((letter, i) => (
-        <span key={i} className="flex items-center">
-          <span
-            className={`font-title font-extrabold text-3xl sm:text-4xl tracking-wide ${
-              letterColors[i % letterColors.length]
-            }`}
-            style={{ WebkitTextStroke: "1px rgba(0,0,0,0.15)" }}
-          >
+        <span key={i} className="flex items-center" aria-hidden>
+          <span className="anim-pop" style={{ animationDelay: `${start + i * 0.12}s` }}>
             {letter}
           </span>
           {i < letters.length - 1 && (
-            <span className="text-brand-yellow text-2xl mx-0.5 self-center">
-              ·
-            </span>
+            <span
+              className="anim-pop mx-[1.7cqw] size-[1.5cqw] rounded-full"
+              style={{
+                background: DOT_COLORS[i % DOT_COLORS.length],
+                animationDelay: `${start + i * 0.12 + 0.06}s`,
+              }}
+            />
           )}
         </span>
       ))}
-    </div>
+    </h1>
   );
 }

@@ -1,22 +1,37 @@
-import type { Metadata } from "next";
-import { Caveat, Baloo_2 } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Satisfy, Fredoka, Montserrat } from "next/font/google";
 import "./globals.css";
 
-const caveat = Caveat({
-  variable: "--font-script",
+const satisfy = Satisfy({
+  variable: "--font-satisfy",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
 });
 
-const baloo = Baloo_2({
-  variable: "--font-title",
+const fredoka = Fredoka({
+  variable: "--font-fredoka",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["500", "600"],
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Yasmin faz 20 anos!",
-  description: "Confirme sua presença na festa de 20 anos da Yasmin",
+  title: "Aquele em que a Yasmin faz 20 anos",
+  description: "Convite do aniversário de 20 anos da Yasmin — confirme sua presença!",
+  openGraph: {
+    title: "Aquele em que a Yasmin faz 20 anos",
+    description: "Confirme sua presença!",
+    images: ["/images/yasmin-face.png"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#8c64a8",
 };
 
 export default function RootLayout({
@@ -26,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${caveat.variable} ${baloo.variable} antialiased`}>
+      <body
+        className={`${satisfy.variable} ${fredoka.variable} ${montserrat.variable} antialiased`}
+      >
         {children}
       </body>
     </html>

@@ -1,70 +1,49 @@
 import Link from "next/link";
 import { eventConfig } from "@/lib/eventConfig";
 
-function MapPinIcon() {
+function MapIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <path
-        d="M12 22s7-7.58 7-12.5A7 7 0 1 0 5 9.5C5 14.42 12 22 12 22Z"
-        stroke="var(--color-brand-purple)"
-        strokeWidth="1.8"
-      />
-      <circle cx="12" cy="9.5" r="2.6" fill="var(--color-brand-purple)" />
+    <svg viewBox="0 0 48 48" className="size-full" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinejoin="round" aria-hidden>
+      <path d="M24 5a9 9 0 0 0-9 9c0 7 9 16 9 16s9-9 9-16a9 9 0 0 0-9-9Z" />
+      <circle cx="24" cy="14" r="3.4" />
+      <path d="M14 28 6 31 3 43l10-3 11 3 11-3 10 3-3-12-8-3" />
+      <path d="M13 40l2-10M35 40l-2-10M24 43v-9" strokeDasharray="2 2.5" />
     </svg>
   );
 }
 
-function EnvelopeIcon() {
+function LetterIcon() {
   return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none">
-      <rect
-        x="2.5"
-        y="5"
-        width="19"
-        height="14"
-        rx="2.5"
-        stroke="var(--color-brand-purple)"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M3.5 6.5 12 13 20.5 6.5"
-        stroke="var(--color-brand-purple)"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg viewBox="0 0 48 48" className="size-full" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinejoin="round" aria-hidden>
+      <path d="M11 22V6h26v16" />
+      <path d="M24 19c-5-3.2-6.6-6-5.2-8.2 1.2-1.8 3.8-1.6 5.2.6 1.4-2.2 4-2.4 5.2-.6 1.4 2.2-.2 5-5.2 8.2Z" />
+      <path d="M5 20l6-4M43 20l-6-4M5 20v23h38V20L24 33 5 20Z" />
+      <path d="M5 43l14-13M43 43 29 30" />
     </svg>
   );
 }
 
-export default function ActionButtons() {
+const itemClass =
+  "group flex w-[27cqw] flex-col items-center gap-[1.2cqw] text-center font-sans text-[3.1cqw] leading-snug outline-none";
+const iconClass =
+  "size-[7.4cqw] transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110 group-focus-visible:scale-110 group-active:scale-95";
+
+export default function ActionButtons({ start = 0 }: { start?: number }) {
   return (
-    <div className="flex gap-4 justify-center mt-6">
-      <a
-        href={eventConfig.local.mapsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex flex-col items-center gap-2 group"
-      >
-        <span className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-md group-active:scale-95 transition-transform">
-          <MapPinIcon />
+    <nav className="anim-fade flex justify-center gap-[5cqw]" style={{ animationDelay: `${start}s` }}>
+      <a href={eventConfig.local.mapsUrl} target="_blank" rel="noopener noreferrer" className={itemClass}>
+        <span className={iconClass}>
+          <MapIcon />
         </span>
-        <span className="text-sm font-semibold text-center max-w-[7rem]">
-          {eventConfig.botoes.comoChegar}
-        </span>
+        <span className="underline-offset-4 group-hover:underline">{eventConfig.botoes.comoChegar}</span>
       </a>
 
-      <Link
-        href="/confirmar"
-        className="flex flex-col items-center gap-2 group"
-      >
-        <span className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-md group-active:scale-95 transition-transform">
-          <EnvelopeIcon />
+      <Link href="/confirmar" className={itemClass}>
+        <span className={`${iconClass} anim-nudge`}>
+          <LetterIcon />
         </span>
-        <span className="text-sm font-semibold text-center max-w-[7rem]">
-          {eventConfig.botoes.confirmarPresenca}
-        </span>
+        <span className="underline-offset-4 group-hover:underline">{eventConfig.botoes.confirmarPresenca}</span>
       </Link>
-    </div>
+    </nav>
   );
 }

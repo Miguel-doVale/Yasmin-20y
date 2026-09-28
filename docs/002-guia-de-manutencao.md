@@ -1,100 +1,107 @@
 # 002 — Guia de manutenção do site (Yasmin 20 anos)
 
-Guia completo de onde mexer para manter, editar ou dar suporte a este
-site sem precisar reler todo o código.
+Onde mexer para editar ou manter o site sem precisar ler todo o código.
+Histórico de mudanças: `docs/001-...`, `docs/004-...` etc.
 
 ## Stack
 
 - **Next.js 16** (App Router) + **TypeScript**
-- **Tailwind CSS v4** (config direto no CSS, sem `tailwind.config.js`)
-- **Firebase Firestore** (banco de dados do RSVP)
-- Fontes: `Caveat` (script/manuscrita) e `Baloo 2` (título), via
-  `next/font/google`
+- **Tailwind CSS v4** (configurado direto no CSS, sem `tailwind.config.js`)
+- **Firebase Firestore** (lista de confirmados)
+- Fontes do Google via `next/font`: **Satisfy** (script), **Fredoka** (nome),
+  **Montserrat** (textos pequenos)
 
 ## Estrutura de pastas
 
 ```
 Yasmin-20y/
-├── docs/                       # Documentação (este guia e o changelog)
-├── firestore.rules             # Regras de segurança do Firestore
-├── .env.local.example          # Modelo das variáveis de ambiente do Firebase
-├── .env.local                  # (você cria) credenciais reais — NUNCA commitar
-├── public/
-│   └── images/
-│       ├── yasmin-face.png     # Foto de rosto usada na moldura (fundo transparente)
-│       ├── party-hats.png      # Imagem original com os 2 chapéus (referência)
-│       └── party-hat-top.png   # Chapéu já recortado/isolado, usado no site
+├── docs/                         # Documentação (este guia + histórico de mudanças)
+├── firestore.rules               # Regras de segurança do banco (cole no Console do Firebase)
+├── .env.local.example            # Modelo das credenciais do Firebase
+├── .env.local                    # (você cria) credenciais reais, NUNCA vai pro git
+├── next.config.ts                # Config do Next (indicador de dev desligado)
+├── public/images/
+│   ├── yasmin-face.png           # Rosto recortado (PNG transparente); vira P&B via CSS
+│   ├── party-hat-top.png         # Chapéu rosa (o usado hoje)
+│   ├── party-hat-confetti.png    # Chapéu de confete (alternativa)
+│   └── party-hats.png            # Imagem original com os 2 chapéus (só referência)
 └── src/
     ├── app/
-    │   ├── layout.tsx          # Fontes globais + <html>/<body>
-    │   ├── globals.css         # Paleta de cores (roxo/amarelo/rosa) e tema Tailwind
-    │   ├── page.tsx            # PÁGINA INICIAL (o convite)
-    │   └── confirmar/
-    │       └── page.tsx        # PÁGINA DE RSVP (formulário + grava no Firestore)
+    │   ├── layout.tsx            # Fontes, título da aba, cor da barra do navegador
+    │   ├── globals.css           # PALETA DE CORES + todas as animações
+    │   ├── page.tsx              # PÁGINA DO CONVITE (ordem e tempo das animações)
+    │   └── confirmar/page.tsx    # Página de RSVP (só monta o cartão + RsvpFlow)
     ├── components/
-    │   ├── PhotoCarousel.tsx   # Carrossel de fotos + chapéu sobreposto
-    │   ├── PeepholeFrame.tsx   # A moldura ornamentada (SVG, estilo "Friends")
-    │   ├── CornerDoodle.tsx    # Rabisco dourado dos cantos superiores
-    │   ├── Sparkle.tsx         # Ícone de estrelinha/brilho
-    │   ├── NameTitle.tsx       # "Y·A·S·M·I·N" com letras coloridas
-    │   └── ActionButtons.tsx   # Botões "Como chegar" e "Confirme sua presença!"
+    │   ├── InviteCard.tsx        # O "cartão" roxo com as 4 fitas (usado nas 2 páginas)
+    │   ├── CornerRibbon.tsx      # Fita dourada com laço de cada canto
+    │   ├── FriendsFrame.tsx      # Desenho SVG da moldura do Friends
+    │   ├── FrameCarousel.tsx     # Carrossel: fila de molduras + rosto + chapéu + estrelinhas
+    │   ├── NameTitle.tsx         # Y·A·S·M·I·N (letras brancas, pontos coloridos)
+    │   ├── TypeReveal.tsx        # Efeito de texto sendo digitado
+    │   ├── Sparkle.tsx           # Estrelinha branca de 4 pontas
+    │   ├── ActionButtons.tsx     # "Como chegar" e "Confirme sua presença!" (ícones)
+    │   └── RsvpFlow.tsx          # Fluxo: vai? → nome + telefone → salva
     └── lib/
-        ├── eventConfig.ts      # TEXTOS E DADOS DO EVENTO (edite aqui primeiro!)
-        └── firebase.ts         # Conexão com o Firebase (lê variáveis de ambiente)
+        ├── eventConfig.ts        # TEXTOS E DADOS DO EVENTO (comece por aqui!)
+        └── firebase.ts           # Conexão com o Firebase + função saveRsvp()
 ```
 
-## "Preciso mudar X, onde mexo?"
+## "Quero mudar X, onde mexo?"
 
-| O que você quer mudar | Arquivo |
+| O que mudar | Onde |
 |---|---|
-| Data, hora, local do evento | `src/lib/eventConfig.ts` |
-| Texto dos botões | `src/lib/eventConfig.ts` → `botoes` |
-| Frase engraçada ("Posso ficar com os presentes...") | `src/lib/eventConfig.ts` → `frase` |
-| Link do Google Maps do "Como chegar" | `src/lib/eventConfig.ts` → `local.mapsUrl` |
-| Fotos que aparecem na moldura (carrossel) | `src/lib/eventConfig.ts` → `fotosCarrossel` (adicione o caminho da imagem em `public/images/` e inclua na lista) |
-| Cores (roxo, amarelo, rosa) | `src/app/globals.css` (variáveis `--color-purple`, `--color-yellow`, `--color-pink`) |
-| Fontes | `src/app/layout.tsx` (troque `Caveat`/`Baloo_2` por outra do Google Fonts) |
-| Nome "YASMIN" e cor de cada letra | `src/components/NameTitle.tsx` |
-| Campos do formulário de RSVP (nome, telefone, etc.) | `src/app/confirmar/page.tsx` |
-| Onde as confirmações são salvas | Firestore, coleção `confirmacoes` (ver `docs/003-configurar-firebase.md`) |
-| Regras de quem pode ler/escrever no banco | `firestore.rules` |
-| Título da aba do navegador / SEO | `src/app/layout.tsx` → `export const metadata` |
+| Data, hora | `src/lib/eventConfig.ts` → `diaSemana`, `dia`, `mes`, `hora` |
+| Link do "Como chegar" (Google Maps) | `eventConfig.ts` → `local.mapsUrl` |
+| Frase "Posso ficar com os presentes..." | `eventConfig.ts` → `frase` |
+| "Aquele em que" / "faz 20 anos" / nome | `eventConfig.ts` → `chamada`, `subtitulo`, `nome` |
+| Texto dos botões | `eventConfig.ts` → `botoes` |
+| Fotos que passam nas molduras | Coloque o PNG **com fundo transparente** em `public/images/` e adicione em `eventConfig.ts` → `fotosCarrossel` (cada moldura que chega traz a próxima foto) |
+| Trocar o chapéu | `eventConfig.ts` → `chapeu` |
+| Velocidade do carrossel | `eventConfig.ts` → `carrosselIntervaloMs` |
+| Cores (roxo, amarelo, pontos) | `src/app/globals.css` → bloco `:root` |
+| Fontes | `src/app/layout.tsx` |
+| Formato da moldura | `src/components/FriendsFrame.tsx` |
+| Tamanho da moldura / distância entre molduras | `FrameCarousel.tsx` → `FRAME_W`, `SLOT` |
+| Posição do rosto e do chapéu na moldura | `FrameCarousel.tsx` (classes `left-[..%] top-[..%]`) |
+| Ordem e tempo das animações de entrada | `src/app/page.tsx` → props `start` (segundos) |
+| Textos da página de confirmação | `src/components/RsvpFlow.tsx` |
+| Campos salvos no banco | `src/lib/firebase.ts` → `saveRsvp` **e** `firestore.rules` (os dois precisam bater!) |
+| Título da aba / preview no WhatsApp | `src/app/layout.tsx` → `metadata` |
 
-## Nenhum texto, emoji, token ou nome está "espalhado" pelo código
+## Tamanhos em `cqw`
 
-Por design, todo o conteúdo editável (textos, data, telefone de contato,
-link do mapa, lista de fotos) está centralizado em **um único arquivo**:
-`src/lib/eventConfig.ts`. Comece sempre por ali quando for alterar
-conteúdo — só mexa nos componentes (`src/components/`) se for mudar
-**layout ou visual**.
+Dentro do cartão, os tamanhos usam `cqw` = 1% da largura do cartão
+(ex.: `text-[6cqw]`). É isso que deixa o site com a mesma proporção do
+Canva em qualquer tela. Para aumentar ou diminuir algo, mude o número.
 
-Não existem tokens, chaves de API ou segredos escritos diretamente no
-código: tudo isso fica em variáveis de ambiente (`.env.local`, que nunca é
-commitado no git — veja `.gitignore`).
+## Emojis, tokens e segredos
 
-## Como rodar o projeto localmente
+- Não há emojis no site (o design original não usa).
+- Não há chaves escritas no código. As credenciais do Firebase ficam só no
+  `.env.local` (e nas variáveis de ambiente da Vercel no deploy).
+
+## Ver a lista de confirmados
+
+Console do Firebase → Firestore Database → aba **Dados** → coleção
+**`confirmacoes`**. Cada documento tem `nome`, `telefone` (só dígitos, com
+DDD) e `criadoEm`. Se alguém confirmar duas vezes, aparecem dois
+documentos com o mesmo telefone.
+
+## Rodar localmente
 
 ```bash
 npm install
-npm run dev
+cp .env.local.example .env.local   # preencha (docs/003-configurar-firebase.md)
+npm run dev                        # http://localhost:3000
 ```
 
-Abra `http://localhost:3000`.
+## Deploy (recomendado: Vercel, plano grátis)
 
-## Como fazer o deploy
+1. Importe o repositório do GitHub na Vercel.
+2. Em Settings → Environment Variables, cadastre as 6 variáveis do `.env.local`.
+3. Cada push na branch principal publica sozinho.
 
-Recomendado: [Vercel](https://vercel.com) (mesma empresa do Next.js,
-plano gratuito é suficiente).
+## Convenção
 
-1. Suba o repositório para o GitHub.
-2. Importe o repositório na Vercel.
-3. Nas configurações do projeto na Vercel, adicione as mesmas variáveis
-   de `.env.local` (Settings → Environment Variables).
-4. Deploy automático a cada push.
-
-## Convenção para futuras alterações
-
-Sempre que uma nova alteração, adição ou correção for feita neste
-projeto, documentar em um novo arquivo `docs/00X-nome-da-mudanca.md`
-(numeração sequencial), explicando o que mudou e por quê — e atualizar
-este guia se a estrutura de pastas mudar.
+Toda alteração nova ganha um arquivo `docs/00X-nome-da-mudanca.md`
+(numeração sequencial). Se a estrutura de pastas mudar, atualize este guia.

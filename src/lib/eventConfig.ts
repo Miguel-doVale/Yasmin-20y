@@ -17,7 +17,7 @@ export const eventConfig = {
   // Local (PLACEHOLDER — troque pelo link real do Google Maps)
   local: {
     nomeLocal: "Local a definir",
-    mapsUrl: "https://maps.google.com/?q=",
+    mapsUrl: "https://maps.app.goo.gl/ZW8s9UYp3RUmskHm8",
   },
 
   botoes: {

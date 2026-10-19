@@ -12,7 +12,7 @@ export const eventConfig = {
   diaSemana: "Quarta",
   dia: "4",
   mes: "NOV",
-  hora: "19:30H",
+  hora: "19:00H",
 
   // Local (PLACEHOLDER — troque pelo link real do Google Maps)
   local: {
